@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PointAndClickController : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PointAndClickController : MonoBehaviour
     float currentSpeed;
     public float maxSpeed;
     [SerializeField] Animator animator;
+    public NavMeshAgent navMeshAgent;
 
     void Update()
     {
@@ -30,13 +32,14 @@ public class PointAndClickController : MonoBehaviour
             }
         }
 
-        Vector3 direction = target - transform.position;
-        transform.Translate(direction.normalized * currentSpeed * Time.deltaTime, Space.World);
+        //Vector3 direction = target - transform.position;
+        //transform.Translate(direction.normalized * currentSpeed * Time.deltaTime, Space.World);
     }
 
     void SetNewTarget(Vector3 newTarget)
     {
         target = newTarget;
-        transform.LookAt(target);
+        //transform.LookAt(target);
+        navMeshAgent.SetDestination(target);
     }
 }
