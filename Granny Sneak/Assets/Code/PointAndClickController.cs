@@ -11,16 +11,9 @@ public class PointAndClickController : MonoBehaviour
 
     void Update()
     {
-        if (Vector3.Distance(transform.position, target) < 1)
-        {
-            currentSpeed = 0;
-            animator.SetBool("isRunning", false);
-        }
-
         if (Input.GetMouseButtonDown(0) == true)
         {
             currentSpeed = maxSpeed;
-            animator.SetBool("isRunning", true);
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
