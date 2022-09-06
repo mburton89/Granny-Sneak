@@ -13,6 +13,7 @@ public class Guard : MonoBehaviour
     public float viewDistance;
     public LayerMask viewMask;
     float viewAngle;
+    bool startedGameOver;
 
     //GAME DESIGN TODOs
     //How should AI Guard behave when Granny runs away
@@ -38,6 +39,11 @@ public class Guard : MonoBehaviour
             spotlight.color = Color.red;
             navMeshAgent.speed = 4;
             navMeshAgent.SetDestination(player.transform.position);
+
+            if (!startedGameOver)
+            {
+                GameManager.Instance.GameOver();
+            }
         }
     }
 

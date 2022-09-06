@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Point And Click Demo.unity
+    guid: 9a91c64c8e02724429e2cf6e1cc99ca1
   m_configObjects: {}
