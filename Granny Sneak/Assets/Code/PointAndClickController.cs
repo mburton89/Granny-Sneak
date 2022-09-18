@@ -13,7 +13,7 @@ public class PointAndClickController : MonoBehaviour
 
     void Update()
     {
-        if (Vector3.Distance(transform.position, target) < 1)
+        if (Vector3.Distance(transform.position, target) < 0.1f)
         {
             currentSpeed = 0;
             animator.SetBool("isRunning", false);
