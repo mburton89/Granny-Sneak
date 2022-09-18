@@ -8,4 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Point And Click Demo.unity
     guid: 9a91c64c8e02724429e2cf6e1cc99ca1
-  m_configObjects: {}
+  m_configObjects:
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: a48b1503157b9154fbba48384a6b4e98, type: 2}
+    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 472e3da261940cf4b9ee807f2be891e0, type: 2}
