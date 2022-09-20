@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/XR/AR Demo/AR Demo.unity
     guid: f7296f71055aa824886a6332a695b5dc
   - enabled: 0
