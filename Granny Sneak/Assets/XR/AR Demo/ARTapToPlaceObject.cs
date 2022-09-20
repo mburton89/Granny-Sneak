@@ -16,7 +16,7 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     public GameObject objectToPlace;
 
-    bool hasPlacedObject = false;
+    bool hasPlacedObject = true;
     PointAndClickController player;
 
     void Start()
@@ -33,7 +33,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             if (hasPlacedObject)
             {
-                player.SetNewTarget(placementPose.position);
+                player.SetNewTarget(new Vector3(placementPose.position.x, player.transform.position.y, placementPose.position.z));
             }
             else
             {
@@ -75,7 +75,8 @@ public class ARTapToPlaceObject : MonoBehaviour
     void PlaceObject()
     {
         GameObject newObject = Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
-        player = newObject.GetComponent<PointAndClickController>();
+        //objectToPlace.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
+        player = FindObjectOfType<PointAndClickController>();
         hasPlacedObject = true;
     }
 }

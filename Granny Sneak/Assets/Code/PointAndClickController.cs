@@ -32,14 +32,14 @@ public class PointAndClickController : MonoBehaviour
             }
         }
 
-        Vector3 direction = target - transform.position; //comment out when using nav mesh
-        transform.Translate(direction.normalized * currentSpeed * Time.deltaTime, Space.World); //comment out when using nav mesh
+        //Vector3 direction = target - transform.position; //comment out when using nav mesh
+        //transform.Translate(direction.normalized * currentSpeed * Time.deltaTime, Space.World); //comment out when using nav mesh
     }
 
     public void SetNewTarget(Vector3 newTarget)
     {
         target = newTarget;
-        transform.LookAt(target);  //comment out when using nav mesh
-        //navMeshAgent.SetDestination(target); 
+        //transform.LookAt(target);  //comment out when using nav mesh
+        navMeshAgent.SetDestination(target); 
     }
 }
