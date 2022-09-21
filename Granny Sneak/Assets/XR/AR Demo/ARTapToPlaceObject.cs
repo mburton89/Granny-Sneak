@@ -10,11 +10,15 @@ public class ARTapToPlaceObject : MonoBehaviour
 {
     public GameObject placementIndicator;
 
+
     private ARRaycastManager arOrigin;
     private Pose placementPose;
     private bool placementPoseIsValid = false;
 
     public GameObject objectToPlace;
+
+    bool hasPlacedObject = false;
+    PointAndClickController player;
 
     void Start()
     {
@@ -28,7 +32,14 @@ public class ARTapToPlaceObject : MonoBehaviour
 
         if (placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
-            PlaceObject();
+            if(hasPlacedObject)
+            {
+                player.SetNewTarget(placementPose.position);
+            }
+            else
+            {
+                PlaceObject();
+            }
         }
     }
 
@@ -64,6 +75,8 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     void PlaceObject()
     {
-        Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
+        GameObject newObject =Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
+        player = newObject.GetComponent<PointAndClickController>();
+        hasPlacedObject = true;
     }
 }
