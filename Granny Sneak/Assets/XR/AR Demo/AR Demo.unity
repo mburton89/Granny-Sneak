@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placementIndicator: {fileID: 1365362184}
-  objectToPlace: {fileID: 7005678183428859106, guid: c2695168e4c2b174bbcf0b1b7e15a195, type: 3}
+  objectToPlace: {fileID: 1653328203353900730, guid: f2ff0ac7aa4bba947a55ee85e5a1530a, type: 3}
 --- !u!4 &372571939
 Transform:
   m_ObjectHideFlags: 0
@@ -582,8 +582,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4966719baa26e4b0e8231a24d9bd491a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FocusMode: 1
-  m_LightEstimationMode: 0
+  m_FocusMode: -1
+  m_LightEstimationMode: -1
   m_AutoFocus: 1
   m_LightEstimation: 0
   m_FacingDirection: 1
