@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placementIndicator: {fileID: 1725186411}
-  objectToPlace: {fileID: 1477110194006824242, guid: 5f84ba88dfb2a624d9acf9f0c78e7911, type: 3}
+  objectToPlace: {fileID: 1653328203353900730, guid: f2ff0ac7aa4bba947a55ee85e5a1530a, type: 3}
 --- !u!1 &767686743
 GameObject:
   m_ObjectHideFlags: 0
