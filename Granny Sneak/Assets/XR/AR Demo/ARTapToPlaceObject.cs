@@ -33,11 +33,12 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             if (hasPlacedObject)
             {
-                player.SetNewTarget(placementPose.position);
+                //player.SetNewTarget(placementPose.position);
+                PlacePoster();
             }
             else
             {
-                PlaceObject();
+                PlaceAvatar();
             }
         }
     }
@@ -72,10 +73,17 @@ public class ARTapToPlaceObject : MonoBehaviour
         }
     }
 
-    void PlaceObject()
+    void PlaceAvatar()
     {
-        GameObject newObject = Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
-        player = newObject.GetComponent<PointAndClickController>();
+        GameObject newObject = Instantiate(objectsToPlace[0], placementPose.position, placementPose.rotation);
+        //player = newObject.GetComponent<PointAndClickController>();
+        hasPlacedObject = true;
+    }
+
+    void PlacePoster()
+    {
+        GameObject newObject = Instantiate(objectsToPlace[1], placementPose.position, placementPose.rotation);
+        //player = newObject.GetComponent<PointAndClickController>();
         hasPlacedObject = true;
     }
 }
