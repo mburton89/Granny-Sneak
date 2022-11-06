@@ -14,7 +14,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     private Pose placementPose;
     private bool placementPoseIsValid = false;
 
-    public GameObject objectToPlace;
+    public List<GameObject> objectsToPlace;
 
     bool hasPlacedObject = false;
     PointAndClickController player;
