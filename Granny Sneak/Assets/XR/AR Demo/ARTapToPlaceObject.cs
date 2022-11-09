@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.Experimental.XR;
 using UnityEngine.XR.ARSubsystems;
@@ -19,9 +20,16 @@ public class ARTapToPlaceObject : MonoBehaviour
     bool hasPlacedObject = false;
     PointAndClickController player;
 
+    public Button moveButton;
+
     void Start()
     {
         arOrigin = FindObjectOfType<ARRaycastManager>();
+    }
+
+    private void OnEnable()
+    {
+        moveButton.onClick.AddListener(HandleMoveClicked);
     }
 
     void Update()
@@ -29,12 +37,26 @@ public class ARTapToPlaceObject : MonoBehaviour
         UpdatePlacementPose();
         UpdatePlacementIndicator();
 
-        if (placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        //if (placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        //{
+        //    if (hasPlacedObject)
+        //    {
+        //        player.SetNewTarget(placementPose.position);
+        //    }
+        //    else
+        //    {
+        //        PlaceAvatar();
+        //    }
+        //}
+    }
+
+    void HandleMoveClicked()
+    {
+        if (placementPoseIsValid)
         {
             if (hasPlacedObject)
             {
-                //player.SetNewTarget(placementPose.position);
-                PlacePoster();
+                player.SetNewTarget(placementPose.position);
             }
             else
             {
@@ -76,14 +98,14 @@ public class ARTapToPlaceObject : MonoBehaviour
     void PlaceAvatar()
     {
         GameObject newObject = Instantiate(objectsToPlace[0], placementPose.position, placementPose.rotation);
-        //player = newObject.GetComponent<PointAndClickController>();
+        player = newObject.GetComponent<PointAndClickController>();
+        AnimationManager.Instance.animator = player.GetComponent<Animator>();
         hasPlacedObject = true;
     }
 
     void PlacePoster()
     {
         GameObject newObject = Instantiate(objectsToPlace[1], placementPose.position, placementPose.rotation);
-        //player = newObject.GetComponent<PointAndClickController>();
         hasPlacedObject = true;
     }
 }

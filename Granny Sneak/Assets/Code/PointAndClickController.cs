@@ -13,24 +13,29 @@ public class PointAndClickController : MonoBehaviour
 
     void Update()
     {
-        if (Vector3.Distance(transform.position, target) < 0.1f)
+        if (Vector3.Distance(transform.position, target) < 0.5f)
         {
             currentSpeed = 0;
             animator.SetBool("isRunning", false);
         }
-
-        if (Input.GetMouseButtonDown(0) == true)
+        else
         {
             currentSpeed = maxSpeed;
             animator.SetBool("isRunning", true);
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo;
-            if (Physics.Raycast(ray.origin, ray.direction, out hitInfo) == true)
-            {
-                SetNewTarget(new Vector3(hitInfo.point.x, transform.position.y, hitInfo.point.z));
-            }
         }
+
+        //if (Input.GetMouseButtonDown(0) == true)
+        //{
+        //    currentSpeed = maxSpeed;
+        //    animator.SetBool("isRunning", true);
+
+        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //    RaycastHit hitInfo;
+        //    if (Physics.Raycast(ray.origin, ray.direction, out hitInfo) == true)
+        //    {
+        //        SetNewTarget(new Vector3(hitInfo.point.x, transform.position.y, hitInfo.point.z));
+        //    }
+        //}
 
         Vector3 direction = target - transform.position; //comment out when using nav mesh
         transform.Translate(direction.normalized * currentSpeed * Time.deltaTime, Space.World); //comment out when using nav mesh
