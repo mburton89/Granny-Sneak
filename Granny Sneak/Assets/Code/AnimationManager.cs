@@ -14,6 +14,11 @@ public class AnimationManager : MonoBehaviour
     [SerializeField] Button DribbleButton;
     [SerializeField] Button ComputerButton;
     [SerializeField] Button FlyButton;
+    [SerializeField] Button ThinkButton;
+
+    public float flySpeed;
+    bool isFlying;
+    Vector3 initialPosition;
 
     private void Awake()
     {
@@ -27,6 +32,15 @@ public class AnimationManager : MonoBehaviour
         DribbleButton.onClick.AddListener(Dribble);
         ComputerButton.onClick.AddListener(Computer);
         FlyButton.onClick.AddListener(Fly);
+        ThinkButton.onClick.AddListener(Think);
+    }
+
+    void Update()
+    {
+        if (isFlying)
+        {
+            animator.transform.localPosition += Vector3.up * flySpeed;
+        } 
     }
 
     void Wave()
@@ -52,5 +66,23 @@ public class AnimationManager : MonoBehaviour
     void Fly()
     {
         animator.SetTrigger("fly");
+        StartCoroutine(StartFlying());
+    }
+
+    void Think()
+    {
+        animator.SetTrigger("think");
+    }
+
+    private IEnumerator StartFlying()
+    {
+        animator.GetComponent<PointAndClickController>().enabled = false;
+        initialPosition = animator.transform.localPosition;
+        yield return new WaitForSeconds(.5f);
+        isFlying = true;
+        yield return new WaitForSeconds(5f);
+        isFlying = false;
+        animator.GetComponent<PointAndClickController>().enabled = true;
+        animator.transform.localPosition = initialPosition;
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.Experimental.XR;
 using UnityEngine.XR.ARSubsystems;
+using TMPro;
 
 public class ARTapToPlaceObject : MonoBehaviour
 {
@@ -21,15 +22,29 @@ public class ARTapToPlaceObject : MonoBehaviour
     PointAndClickController player;
 
     public Button moveButton;
+    public Button matthewButton;
+    public Button massigaButton;
+    public GameObject emotButtons;
+
+    public TextMeshProUGUI hintText;
+
+    bool hasSeenHint2;
+    bool hasSeenHint3;
 
     void Start()
     {
         arOrigin = FindObjectOfType<ARRaycastManager>();
+        massigaButton.transform.localScale = Vector3.zero;
+        matthewButton.transform.localScale = Vector3.zero;
+        moveButton.transform.localScale = Vector3.zero;
+        emotButtons.transform.localScale = Vector3.zero;
     }
 
     private void OnEnable()
     {
         moveButton.onClick.AddListener(HandleMoveClicked);
+        matthewButton.onClick.AddListener(HandleMatthewPressed);
+        massigaButton.onClick.AddListener(HandleMassigaPressed);
     }
 
     void Update()
@@ -57,12 +72,19 @@ public class ARTapToPlaceObject : MonoBehaviour
             if (hasPlacedObject)
             {
                 player.SetNewTarget(placementPose.position);
-            }
-            else
-            {
-                PlaceAvatar();
+                hintText.SetText("");
             }
         }
+    }
+
+    void HandleMassigaPressed()
+    {
+        PlaceAvatar(0);
+    }
+
+    void HandleMatthewPressed()
+    {
+        PlaceAvatar(1);
     }
 
     void UpdatePlacementPose()
@@ -85,6 +107,13 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         if (placementPoseIsValid)
         {
+            if (!hasSeenHint2)
+            {
+                hasSeenHint2 = true;
+                hintText.SetText("Choose Avatar to place on ground");
+                massigaButton.transform.localScale = Vector3.one;
+                matthewButton.transform.localScale = Vector3.one;
+            }
             placementIndicator.SetActive(true);
             placementIndicator.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
             placementIndicator.transform.position = placementPose.position;
@@ -95,12 +124,24 @@ public class ARTapToPlaceObject : MonoBehaviour
         }
     }
 
-    void PlaceAvatar()
+    void PlaceAvatar(int objectToPlace)
     {
-        GameObject newObject = Instantiate(objectsToPlace[0], placementPose.position, placementPose.rotation);
+        if (!hasSeenHint3)
+        {
+            massigaButton.transform.localScale = Vector3.zero;
+            matthewButton.transform.localScale = Vector3.zero;
+            moveButton.transform.localScale = Vector3.one;
+            emotButtons.transform.localScale = Vector3.one;
+            hasSeenHint3 = true;
+            hintText.SetText("Point and tap to move avatar");
+        }
+        GameObject newObject = Instantiate(objectsToPlace[objectToPlace], placementPose.position, placementPose.rotation);
         player = newObject.GetComponent<PointAndClickController>();
+        player.SetNewTarget(player.transform.position);
         AnimationManager.Instance.animator = player.GetComponent<Animator>();
         hasPlacedObject = true;
+
+        moveButton.transform.localScale = Vector3.one;
     }
 
     void PlacePoster()
