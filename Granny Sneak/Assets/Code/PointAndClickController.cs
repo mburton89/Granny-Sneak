@@ -16,12 +16,26 @@ public class PointAndClickController : MonoBehaviour
         if (Vector3.Distance(transform.position, target) < 0.5f)
         {
             currentSpeed = 0;
-            animator.SetBool("isRunning", false);
+            if (FindObjectOfType<ARTapToPlaceObject>().isTinyMode)
+            {
+                animator.SetBool("isRunning", false);
+            }
+            else
+            {
+                animator.SetBool("isWalking", false);
+            }
         }
         else
         {
             currentSpeed = maxSpeed;
-            animator.SetBool("isRunning", true);
+            if (FindObjectOfType<ARTapToPlaceObject>().isTinyMode)
+            {
+                animator.SetBool("isRunning", true);
+            }
+            else
+            {
+                animator.SetBool("isWalking", true);
+            }
         }
 
         //if (Input.GetMouseButtonDown(0) == true)

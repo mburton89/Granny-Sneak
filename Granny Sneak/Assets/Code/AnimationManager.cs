@@ -46,32 +46,38 @@ public class AnimationManager : MonoBehaviour
     void Wave()
     {
         animator.SetTrigger("wave");
+        SoundManager.Instance.selectSound.Play();
     }
 
     void Flex()
     {
         animator.SetTrigger("flex");
+        SoundManager.Instance.selectSound.Play();
     }
 
     void Dribble()
     {
         animator.SetTrigger("dribble");
+        SoundManager.Instance.selectSound.Play();
     }
 
     void Computer()
     {
         animator.SetTrigger("computer");
+        SoundManager.Instance.selectSound.Play();
     }
 
     void Fly()
     {
         animator.SetTrigger("fly");
+        SoundManager.Instance.selectSound.Play();
         StartCoroutine(StartFlying());
     }
 
     void Think()
     {
         animator.SetTrigger("think");
+        SoundManager.Instance.selectSound.Play();
     }
 
     private IEnumerator StartFlying()

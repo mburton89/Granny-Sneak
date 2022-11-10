@@ -21,30 +21,45 @@ public class ARTapToPlaceObject : MonoBehaviour
     bool hasPlacedObject = false;
     PointAndClickController player;
 
+    public Button homeButton;
+
     public Button moveButton;
-    public Button matthewButton;
+    public Button matthewButton0;
+    public Button matthewButton1;
+    public Button matthewButton2;
+    public Button matthewButton3;
+    public Button matthewButton4;
     public Button massigaButton;
+    public Button tinyModeButton;
+    public GameObject characterButtons;
     public GameObject emotButtons;
 
     public TextMeshProUGUI hintText;
 
     bool hasSeenHint2;
     bool hasSeenHint3;
+    [HideInInspector] public bool isTinyMode;
 
     void Start()
     {
         arOrigin = FindObjectOfType<ARRaycastManager>();
         massigaButton.transform.localScale = Vector3.zero;
-        matthewButton.transform.localScale = Vector3.zero;
+        characterButtons.transform.localScale = Vector3.zero;
         moveButton.transform.localScale = Vector3.zero;
         emotButtons.transform.localScale = Vector3.zero;
     }
 
     private void OnEnable()
     {
+        homeButton.onClick.AddListener(HandleHomeClicked);
         moveButton.onClick.AddListener(HandleMoveClicked);
-        matthewButton.onClick.AddListener(HandleMatthewPressed);
-        massigaButton.onClick.AddListener(HandleMassigaPressed);
+        matthewButton0.onClick.AddListener(delegate { HandleCharacterPressed(0);});
+        matthewButton1.onClick.AddListener(delegate { HandleCharacterPressed(1);});
+        matthewButton2.onClick.AddListener(delegate { HandleCharacterPressed(2);});
+        matthewButton3.onClick.AddListener(delegate { HandleCharacterPressed(3);});
+        matthewButton4.onClick.AddListener(delegate { HandleCharacterPressed(4);});
+        massigaButton.onClick.AddListener(delegate { HandleCharacterPressed(5);});
+        tinyModeButton.onClick.AddListener(HandleTinyModeClicked);
     }
 
     void Update()
@@ -71,20 +86,17 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             if (hasPlacedObject)
             {
+                SoundManager.Instance.moveSound.Play();
                 player.SetNewTarget(placementPose.position);
                 hintText.SetText("");
             }
         }
     }
 
-    void HandleMassigaPressed()
+    void HandleCharacterPressed(int index)
     {
-        PlaceAvatar(0);
-    }
-
-    void HandleMatthewPressed()
-    {
-        PlaceAvatar(1);
+        PlaceAvatar(index);
+        SoundManager.Instance.selectSound.Play();
     }
 
     void UpdatePlacementPose()
@@ -112,7 +124,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                 hasSeenHint2 = true;
                 hintText.SetText("Choose Avatar to place on ground");
                 massigaButton.transform.localScale = Vector3.one;
-                matthewButton.transform.localScale = Vector3.one;
+                characterButtons.transform.localScale = Vector3.one;
             }
             placementIndicator.SetActive(true);
             placementIndicator.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
@@ -129,7 +141,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         if (!hasSeenHint3)
         {
             massigaButton.transform.localScale = Vector3.zero;
-            matthewButton.transform.localScale = Vector3.zero;
+            characterButtons.transform.localScale = Vector3.zero;
             moveButton.transform.localScale = Vector3.one;
             emotButtons.transform.localScale = Vector3.one;
             hasSeenHint3 = true;
@@ -138,6 +150,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         GameObject newObject = Instantiate(objectsToPlace[objectToPlace], placementPose.position, placementPose.rotation);
         player = newObject.GetComponent<PointAndClickController>();
         player.SetNewTarget(player.transform.position);
+        player.transform.eulerAngles = new Vector3(player.transform.eulerAngles.x, player.transform.eulerAngles.y + 180, player.transform.eulerAngles.z);
         AnimationManager.Instance.animator = player.GetComponent<Animator>();
         hasPlacedObject = true;
 
@@ -148,5 +161,29 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         GameObject newObject = Instantiate(objectsToPlace[1], placementPose.position, placementPose.rotation);
         hasPlacedObject = true;
+    }
+
+    void HandleHomeClicked()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+    }
+
+    void HandleTinyModeClicked()
+    {
+        if (isTinyMode)
+        {
+
+            isTinyMode = false;
+            player.transform.position = Vector3.one;
+            tinyModeButton.GetComponent<Image>().color = Color.grey;
+            tinyModeButton.GetComponentInChildren<TextMeshProUGUI>().color = new Color(1, 1, 1, .5f);
+        }
+        else
+        {
+            isTinyMode = true;
+            player.transform.position = new Vector3(0.1f, 0.1f, 0.1f);
+            tinyModeButton.GetComponent<Image>().color = Color.white;
+            tinyModeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.black;
+        }
     }
 }
