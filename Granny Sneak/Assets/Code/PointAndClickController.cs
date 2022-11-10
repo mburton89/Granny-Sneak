@@ -11,9 +11,11 @@ public class PointAndClickController : MonoBehaviour
     [SerializeField] Animator animator;
     public NavMeshAgent navMeshAgent;
 
+    [HideInInspector] public float maxDistanceFromCenter = 0.5f;
+
     void Update()
     {
-        if (Vector3.Distance(transform.position, target) < 0.5f)
+        if (Vector3.Distance(transform.position, target) < maxDistanceFromCenter)
         {
             currentSpeed = 0;
             if (FindObjectOfType<ARTapToPlaceObject>().isTinyMode)

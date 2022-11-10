@@ -174,16 +174,22 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
 
             isTinyMode = false;
-            player.transform.position = Vector3.one;
+            player.transform.localScale = Vector3.one;
+            player.GetComponent<PointAndClickController>().maxSpeed = 2;
+            player.GetComponent<PointAndClickController>().maxDistanceFromCenter = 0.5f;
             tinyModeButton.GetComponent<Image>().color = Color.grey;
             tinyModeButton.GetComponentInChildren<TextMeshProUGUI>().color = new Color(1, 1, 1, .5f);
         }
         else
         {
             isTinyMode = true;
-            player.transform.position = new Vector3(0.1f, 0.1f, 0.1f);
+            player.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            player.GetComponent<PointAndClickController>().maxSpeed = 1;
+            player.GetComponent<PointAndClickController>().maxDistanceFromCenter = 0.15f;
             tinyModeButton.GetComponent<Image>().color = Color.white;
             tinyModeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.black;
         }
+
+        SoundManager.Instance.selectSound.Play();
     }
 }
