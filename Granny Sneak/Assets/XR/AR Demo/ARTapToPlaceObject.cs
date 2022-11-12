@@ -55,6 +55,9 @@ public class ARTapToPlaceObject : MonoBehaviour
         characterButtons.transform.localScale = Vector3.zero;
         moveButton.transform.localScale = Vector3.zero;
         emotButtons.transform.localScale = Vector3.zero;
+        cameraButton.transform.localScale = Vector3.zero;
+        tinyModeButton.transform.localScale = Vector3.zero;
+        exitCameraModeButton.transform.localScale = Vector3.zero;
     }
 
     private void OnEnable()
@@ -154,6 +157,8 @@ public class ARTapToPlaceObject : MonoBehaviour
             characterButtons.transform.localScale = Vector3.zero;
             moveButton.transform.localScale = Vector3.one;
             emotButtons.transform.localScale = Vector3.one;
+            cameraButton.transform.localScale = Vector3.one;
+            tinyModeButton.transform.localScale = Vector3.one;
             hasSeenHint3 = true;
             hintText.SetText("Point and tap to move avatar");
         }
@@ -187,7 +192,7 @@ public class ARTapToPlaceObject : MonoBehaviour
             player.transform.localScale = Vector3.one;
             player.GetComponent<PointAndClickController>().maxSpeed = 2;
             player.GetComponent<PointAndClickController>().maxDistanceFromCenter = 0.5f;
-            tinyModeImage.sprite = tinyModeSprites[1];
+            tinyModeImage.sprite = tinyModeSprites[0];
         }
         else
         {
@@ -195,7 +200,7 @@ public class ARTapToPlaceObject : MonoBehaviour
             player.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
             player.GetComponent<PointAndClickController>().maxSpeed = 1;
             player.GetComponent<PointAndClickController>().maxDistanceFromCenter = 0.18f;
-            tinyModeImage.sprite = tinyModeSprites[0];
+            tinyModeImage.sprite = tinyModeSprites[1];
         }
 
         SoundManager.Instance.selectSound.Play();
