@@ -33,12 +33,20 @@ public class ARTapToPlaceObject : MonoBehaviour
     public Button tinyModeButton;
     public GameObject characterButtons;
     public GameObject emotButtons;
+    public GameObject optionsButtons;
+
 
     public TextMeshProUGUI hintText;
 
     bool hasSeenHint2;
     bool hasSeenHint3;
     [HideInInspector] public bool isTinyMode;
+
+    [SerializeField] List<Sprite> tinyModeSprites;
+    [SerializeField] Image tinyModeImage;
+
+    [SerializeField] Button cameraButton;
+    [SerializeField] Button exitCameraModeButton;
 
     void Start()
     {
@@ -60,6 +68,8 @@ public class ARTapToPlaceObject : MonoBehaviour
         matthewButton4.onClick.AddListener(delegate { HandleCharacterPressed(4);});
         massigaButton.onClick.AddListener(delegate { HandleCharacterPressed(5);});
         tinyModeButton.onClick.AddListener(HandleTinyModeClicked);
+        cameraButton.onClick.AddListener(HandleCameraClicked);
+        exitCameraModeButton.onClick.AddListener(HandleExitCameraClicked);
     }
 
     void Update()
@@ -177,19 +187,31 @@ public class ARTapToPlaceObject : MonoBehaviour
             player.transform.localScale = Vector3.one;
             player.GetComponent<PointAndClickController>().maxSpeed = 2;
             player.GetComponent<PointAndClickController>().maxDistanceFromCenter = 0.5f;
-            tinyModeButton.GetComponent<Image>().color = Color.grey;
-            tinyModeButton.GetComponentInChildren<TextMeshProUGUI>().color = new Color(1, 1, 1, .5f);
+            tinyModeImage.sprite = tinyModeSprites[1];
         }
         else
         {
             isTinyMode = true;
             player.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
             player.GetComponent<PointAndClickController>().maxSpeed = 1;
-            player.GetComponent<PointAndClickController>().maxDistanceFromCenter = 0.15f;
-            tinyModeButton.GetComponent<Image>().color = Color.white;
-            tinyModeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.black;
+            player.GetComponent<PointAndClickController>().maxDistanceFromCenter = 0.18f;
+            tinyModeImage.sprite = tinyModeSprites[0];
         }
 
         SoundManager.Instance.selectSound.Play();
+    }
+
+    void HandleCameraClicked()
+    {
+        emotButtons.transform.localScale = Vector3.zero;
+        optionsButtons.transform.localScale = Vector3.zero;
+        exitCameraModeButton.transform.localScale = Vector3.one;
+    }
+
+    void HandleExitCameraClicked()
+    {
+        emotButtons.transform.localScale = Vector3.one;
+        optionsButtons.transform.localScale = Vector3.one;
+        exitCameraModeButton.transform.localScale = Vector3.zero;
     }
 }

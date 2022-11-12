@@ -59,8 +59,18 @@ public class PointAndClickController : MonoBehaviour
 
     public void SetNewTarget(Vector3 newTarget)
     {
-        target = newTarget;
-        transform.LookAt(target);  //comment out when using nav mesh
-        //navMeshAgent.SetDestination(target); 
+        
+        transform.LookAt(new Vector3(target.x, 0, target.z));  //comment out when using nav mesh
+        //navMeshAgent.SetDestination(target);
+
+        int rand = Random.Range(0, 10);
+        if (rand == 1)
+        {
+            animator.SetTrigger("trip");
+        }
+        else
+        {
+            target = newTarget;
+        }
     }
 }
