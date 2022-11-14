@@ -48,6 +48,8 @@ public class ARTapToPlaceObject : MonoBehaviour
     [SerializeField] Button cameraButton;
     [SerializeField] Button exitCameraModeButton;
 
+    [SerializeField] GameObject placementIndicatorImage;
+
     void Start()
     {
         arOrigin = FindObjectOfType<ARRaycastManager>();
@@ -193,6 +195,7 @@ public class ARTapToPlaceObject : MonoBehaviour
             player.GetComponent<PointAndClickController>().maxSpeed = 2;
             player.GetComponent<PointAndClickController>().maxDistanceFromCenter = 0.5f;
             tinyModeImage.sprite = tinyModeSprites[0];
+            placementIndicatorImage.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
         }
         else
         {
@@ -201,6 +204,7 @@ public class ARTapToPlaceObject : MonoBehaviour
             player.GetComponent<PointAndClickController>().maxSpeed = 1;
             player.GetComponent<PointAndClickController>().maxDistanceFromCenter = 0.18f;
             tinyModeImage.sprite = tinyModeSprites[1];
+            placementIndicatorImage.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
         }
 
         SoundManager.Instance.selectSound.Play();

@@ -13,8 +13,13 @@ public class PointAndClickController : MonoBehaviour
 
     [HideInInspector] public float maxDistanceFromCenter = 0.5f;
 
+    bool isFalling;
+    bool canTrip;
+
     void Update()
     {
+        if (isFalling) return;
+
         if (Vector3.Distance(transform.position, target) < maxDistanceFromCenter)
         {
             currentSpeed = 0;
@@ -59,16 +64,25 @@ public class PointAndClickController : MonoBehaviour
 
     public void SetNewTarget(Vector3 newTarget)
     {
-        int rand = Random.Range(0, 10);
-        if (rand == 1)
+        int rand = Random.Range(0, 17);
+        if (rand == 1 && canTrip)
         {
             animator.SetTrigger("trip");
+            StartCoroutine(FallBuffer());
         }
         else
         {
             target = newTarget;
+            canTrip = true;
         }
 
-        transform.LookAt(target);  //comment out when using nav mesh
+        transform.LookAt(new Vector3 (target.x, transform.localPosition.y, target.z));  //comment out when using nav mesh
+    }
+
+    private IEnumerator FallBuffer()
+    {
+        isFalling = true;
+        yield return new WaitForSeconds(2.5f);
+        isFalling = false;
     }
 }
